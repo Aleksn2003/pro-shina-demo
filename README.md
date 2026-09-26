@@ -1,6 +1,6 @@
-# PRO_ШИНА — демонстрационный шаблон
+# PRO_ШИНА — tire service demo template
 
-Одностраничный сайт частного шиномонтажа на один бокс. Основной сценарий — телефонный звонок или живая очередь. Онлайн-записи нет.
+A single-page website template for an independent, one-bay tire service. The primary customer action is to call or join the live queue. Online booking is not included.
 
 ## Авторство и использование
 
@@ -8,9 +8,9 @@
 
 В репозитории нет открытой лицензии (`LICENSE`). Это уведомление фиксирует намерение автора, но не заменяет юридическую консультацию или отдельную лицензию.
 
-## Запуск
+## Getting started
 
-Нужен Node.js 22.12+ и npm 9.6+.
+Requires Node.js 22.12+ and npm 9.6+.
 
 ```powershell
 git clone https://github.com/Aleksn2003/pro-shina-demo.git
@@ -19,67 +19,66 @@ npm ci
 npm run dev
 ```
 
-Открыть адрес, выведенный Astro (обычно http://127.0.0.1:4321).
+Open the URL printed by Astro (usually http://127.0.0.1:4321).
 
 ```powershell
-npm run build    # TypeScript/Astro check и статическая сборка
-npm run preview  # просмотр собранного сайта
+npm run build    # Run Astro/TypeScript checks and build the static site
+npm run preview  # Preview the production build
 ```
 
-Готовый сайт находится в `dist/`. Его можно разместить на любом статическом хостинге. Сервер Node.js для публичной страницы не требуется.
+The generated site is in `dist/` and can be hosted on any static hosting provider. The public site does not require a Node.js server.
 
-## Публикация в GitHub Pages
+## Deploy to GitHub Pages
 
-Сайт публикуется из ветки `main` через workflow `.github/workflows/deploy.yml`. В репозитории откройте **Settings → Pages** и установите источник **GitHub Actions**. После этого каждый push в `main` автоматически пересоберёт и опубликует сайт по адресу <https://aleksn2003.github.io/pro-shina-demo/>. В локальной разработке проект использует корневой путь; GitHub Actions автоматически включает путь репозитория в ссылки и адреса изображений.
+The site is deployed from the `main` branch by `.github/workflows/deploy.yml`. In the repository, open **Settings → Pages** and select **GitHub Actions** as the source. Each push to `main` will then build and publish the site at <https://aleksn2003.github.io/pro-shina-demo/>. Local development uses root-relative paths; GitHub Actions automatically adds the repository path to links and image URLs.
 
-## Где менять данные
+## Where to edit the data
 
-**`src/config/workshop.ts` — единственный источник данных мастерской. Все значения в нём демонстрационные.** Здесь находятся название, район, контакты, адрес, часы, ориентиры, ссылки на карты, время работы с комплектом, услуги, тарифы, дополнительные работы, преимущества, мастер, изображения, юридические ссылки, настройки формы и SEO.
+**`src/config/workshop.ts` is the single source of truth for workshop data. All values are demonstrations.** It contains the name, neighborhood, contacts, address, opening hours, directions, map links, estimated service time, services, prices, optional work, benefits, master details, images, legal links, callback form settings, and SEO metadata.
 
-- `tariffs`: полные цены в рублях за комплект из четырёх колёс для каждой пары «диаметр / тип автомобиля». Таблица и калькулятор используют один массив.
-- `extras`: только отдельно выбираемые работы. Итог = тариф + сумма выбранных дополнений; округлений и скрытых коэффициентов нет.
-- `services`: стартовые цены отдельных услуг; при адаптации согласуйте их с таблицей комплексной смены шин.
-- `included`, `exclusions`: состав базового тарифа и отдельно согласуемые случаи. Не обещайте включённые работы без подтверждения владельца.
-- `images.master`, `images.entrance`: сейчас это демонстрационные изображения. Замените их настоящими оптимизированными фотографиями мастерской и въезда. Фотографии ниже первого экрана загружаются лениво.
-- `images.hero`: локальная AI-иллюстрация вымышленной мастерской, не фотография реального бизнеса. Два WebP размера с `srcset`; исходник не включён в поставку.
-- `routes`: по умолчанию общие карты без точки мастерской. Замените на проверенные ссылки маршрута в Яндекс Навигатор и 2ГИС; реальные координаты не выдуманы.
+- `tariffs`: complete demo prices in RUB per set of four wheels for each rim-size / vehicle-type combination. The price table and calculator use the same array.
+- `extras`: optional, separately selectable work. The total is the tariff plus the selected extras; there are no hidden multipliers or rounding rules.
+- `services`: starting prices for individual services. When adapting the site, make sure they are consistent with the full tire-change package table.
+- `included`, `exclusions`: what the base demo tariff includes and which cases need separate approval. Do not promise included work unless the owner confirms it.
+- `images.master`, `images.entrance`: currently demo images. Replace them with real, optimized workshop and entrance photos. Images below the first screen are lazy-loaded.
+- `images.hero`: a local AI-generated illustration of a fictional workshop, not a photo of a real business. Two WebP sizes are provided through `srcset`; the source image is not included.
+- `routes`: generic map links without a workshop pin. Replace them with verified Yandex Navigator and 2GIS directions; no real coordinates are invented.
 
-## SEO и запуск настоящей мастерской
+## SEO and launching a real workshop site
 
-Основной контент, тарифная таблица, адрес, телефон, контакты, начальный расчёт и форма отдаются готовым HTML. Только два Vue-острова используют `client:visible`; системные шрифты, никаких сторонних виджетов или аналитики.
+The main content, price table, address, phone number, contacts, initial calculator result, and form are included in the generated HTML. Only two Vue islands use `client:visible`. The site uses system fonts and has no third-party widgets or analytics.
 
-Title, description, canonical, Open Graph, JSON-LD `TireShop` (подтип LocalBusiness), robots.txt и sitemap.xml формируются из конфигурации. Рейтинги и отзывы отсутствуют. Социальная картинка отдельно не генерировалась.
+Title, description, canonical URL, Open Graph metadata, `TireShop` JSON-LD (a `LocalBusiness` subtype), `robots.txt`, and `sitemap.xml` are generated from the configuration. No ratings or reviews are included. A separate social sharing image has not been created.
 
-В демоверсии намеренно установлены `demo: true`, `seo.indexable: false`, `noindex, nofollow`, запрещающий robots.txt и пустой sitemap. **До публичного запуска проверьте и замените все демонстрационные данные**, телефон, домен `seo.siteUrl`, условия работы, фотографии и реальные документы. Затем установите `demo: false`, `seo.indexable: true` и пересоберите сайт. sitemap автоматически включит главную страницу, robots разрешит индексацию.
+The demo intentionally sets `demo: true` and `seo.indexable: false`, which produce `noindex, nofollow`, a blocking `robots.txt`, and an empty sitemap. **Before launching publicly, verify and replace all demo data**, including the phone number, `seo.siteUrl` domain, business terms, photos, and legal documents. Then set `demo: false` and `seo.indexable: true`, and rebuild the site. The sitemap will include the home page and `robots.txt` will allow indexing.
 
-Подписи «демо», «пример», «заглушка» внутри страницы служат явными редакторскими маркерами шаблона. После подтверждения данных отредактируйте соответствующие подписи в `src/pages/index.astro`; одного переключения флага недостаточно для адаптации текста. Условия и цитата мастера требуют отдельного подтверждения владельцем.
+Labels such as “demo,” “example,” and “placeholder” on the page are editorial markers for the template. After verifying the information, update the corresponding labels in `src/pages/index.astro`; changing the flag alone is not enough to adapt the copy. The owner's terms and quote require separate confirmation.
 
-## Обратный звонок: контракт следующего этапа
+## Callback form: next-stage integration contract
 
-При `demo: true`, пустом endpoint или отсутствии настоящей политики кнопка только проверяет номер и явно сообщает: **номер не отправлен, заявка не создана**. Данные не сохраняются ни в localStorage, ни в cookies. Без JavaScript кнопка формы отключена, телефон доступен.
+With `demo: true`, an empty endpoint, or no real privacy policy, the button only validates the phone number and clearly states that **the number was not sent and no request was created**. Data is not stored in `localStorage` or cookies. Without JavaScript, the form button is disabled while the phone link remains available.
 
-Чтобы подключить сервер:
+To connect a backend:
 
-1. Реализуйте собственный same-origin `POST /api/callback`.
-2. Укажите `callback.endpoint: '/api/callback'`, реальный `callback.privacyUrl`, согласованный текст согласия; установите `demo: false`.
-3. Запрос JSON: `{ "phone": "+79991234567", "consent": true }`.
-4. Только подтверждённый ответ HTTP 2xx с `{ "accepted": true, "requestId": "непустой-id" }` показывает успешное состояние. Сервер должен сначала принять заявку в надёжное хранилище/очередь. Другие ответы, не-JSON, сетевые ошибки и таймаут показывают ошибку и кнопку повтора.
-5. Обращение к Zvonok.ru, секретные ключи, нормализация/валидация, проверка согласия, ограничение частоты, защита от спама и дублей, журналирование и повтор доставки реализуются только на сервере. Ключи нельзя помещать в эту конфигурацию или переменные `PUBLIC_*`.
+1. Implement a same-origin `POST /api/callback` endpoint.
+2. Set `callback.endpoint: '/api/callback'`, provide a real `callback.privacyUrl` and approved consent text, and set `demo: false`.
+3. The request body is JSON: `{ "phone": "+79991234567", "consent": true }`.
+4. Only a confirmed HTTP 2xx response containing `{ "accepted": true, "requestId": "non-empty-id" }` displays the success state. The server must first accept the request into reliable storage or a queue. Other responses, invalid JSON, network errors, and timeouts display an error with a retry button.
+5. Calls to Zvonok.ru, secret keys, normalization and validation, consent checks, rate limiting, spam and duplicate protection, logging, and delivery retries must be implemented on the server only. Never put keys in this configuration or in `PUBLIC_*` variables.
 
-Состояния: idle, sending, success (только подтверждение сервера), error (повтор), demo (заявка не отправлялась). Форму не следует подключать непосредственно к Zvonok.ru из браузера.
+States: `idle`, `sending`, `success` (server-confirmed only), `error` (retry available), and `demo` (no request sent). Do not connect the form directly to Zvonok.ru from the browser.
 
-## Основные файлы
+## Key files
 
-- `src/pages/index.astro` — семантическая страница и метаданные.
-- `src/config/workshop.ts` — демоданные и тарифы.
-- `src/components/Calculator.vue` — интерактивный расчёт.
-- `src/components/CallbackForm.vue` — телефон, валидация и состояния отправки.
-- `src/components/Icon.astro` — лёгкие SVG-иконки без клиентской библиотеки.
-- `src/styles/global.css` — Tailwind CSS, оформление и адаптивность.
-- `src/pages/robots.txt.ts`, `src/pages/sitemap.xml.ts` — статически генерируемые SEO-файлы.
-- `public/images/`, `public/favicon.svg` — локальные изображения и favicon.
+- `src/pages/index.astro` — semantic page markup and metadata.
+- `src/config/workshop.ts` — demo data and prices.
+- `src/components/Calculator.vue` — interactive price calculator.
+- `src/components/CallbackForm.vue` — phone input, validation, and submission states.
+- `src/components/Icon.astro` — lightweight SVG icons with no client-side icon library.
+- `src/styles/global.css` — Tailwind CSS, visual styles, and responsive behavior.
+- `src/pages/robots.txt.ts`, `src/pages/sitemap.xml.ts` — statically generated SEO files.
+- `public/images/`, `public/favicon.svg` — local images and favicon.
 
-## Доступность
+## Accessibility
 
-Один h1, последовательные заголовки, skip-link, доступные названия полей, нативные radio/checkbox, видимый фокус, aria-live для суммы и статуса. У мобильной панели есть отступ под safe area и резерв в конце страницы. `prefers-reduced-motion` отключает плавную прокрутку и CSS-переходы. Анимационных библиотек нет.
-
+The page uses one `h1`, sequential headings, a skip link, accessible form labels, native radio buttons and checkboxes, visible focus states, and `aria-live` for the total and form status. The mobile action bar accounts for the safe area and reserves space at the bottom of the page. `prefers-reduced-motion` disables smooth scrolling and CSS transitions. No animation libraries are used.
