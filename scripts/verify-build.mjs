@@ -3,12 +3,16 @@ import assert from "node:assert/strict";
 import { gzipSync } from "node:zlib";
 
 const html = fs.readFileSync("dist/index.html", "utf8");
+const base = process.env.GITHUB_ACTIONS === "true" ? "/pro-shina-demo/" : "/";
 assert.equal((html.match(/<h1\b/g) || []).length, 1, "Exactly one h1");
 assert.equal(
   (html.match(/<astro-island\b/g) || []).length,
   2,
   "Only two Vue islands",
 );
+assert.ok(html.includes(`href="${base}favicon.svg"`), "Favicon uses the deployment base");
+assert.ok(html.includes(`src="${base}images/workshop-hero.webp"`), "Hero image uses the deployment base");
+assert.ok(html.includes(`href="${base}"`), "Brand home link uses the deployment base");
 for (const content of [
   "R19–R20",
   "tel:+70000000000",

@@ -177,7 +177,7 @@ export const workshop = {
     privacyUrl: null as string | null,
   },
   seo: {
-    siteUrl: "https://pro-shina-demo.neon-jelly-9617.chatgpt.site",
+    siteUrl: "https://aleksn2003.github.io/pro-shina-demo/",
     // Keep false until business details, domain, consent and documents are verified.
     indexable: false,
     title: "Шиномонтаж на Уралмаше — PRO_ШИНА | Демонстрационный шаблон",

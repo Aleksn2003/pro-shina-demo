@@ -5,7 +5,9 @@ import Brand from '../components/Brand.astro';
 import Calculator from '../components/Calculator.vue';
 import CallbackForm from '../components/CallbackForm.vue';
 import { workshop as w, money } from '../config/workshop';
-const canonical = new URL('/', w.seo.siteUrl).href;
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`;
+const asset = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const canonical = new URL(baseUrl, w.seo.siteUrl).href;
 const structuredData = {
   '@context': 'https://schema.org', '@type': 'TireShop',
   name: w.name, description: w.seo.description, url: canonical,
@@ -21,7 +23,7 @@ const structuredData = {
     <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#26343c" /><title>{w.seo.title}</title>
     <meta name="description" content={w.seo.description} /><meta name="robots" content={w.seo.indexable && !w.demo ? 'index, follow' : 'noindex, nofollow'} />
-    <link rel="canonical" href={canonical} /><link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} /><link rel="icon" type="image/svg+xml" href={asset('/favicon.svg')} />
     <meta property="og:type" content="website" /><meta property="og:locale" content="ru_RU" /><meta property="og:title" content={w.seo.title} /><meta property="og:description" content={w.seo.description} /><meta property="og:url" content={canonical} /><meta property="og:site_name" content={w.name} />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
   </head>
@@ -40,7 +42,7 @@ const structuredData = {
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-visual">
-          <img src={w.images.hero.src} srcset={`${w.images.hero.small} 768w, ${w.images.hero.src} 1440w`} sizes="100vw" width={w.images.hero.width} height={w.images.hero.height} alt={w.images.hero.alt} fetchpriority="high" />
+          <img src={asset(w.images.hero.src)} srcset={`${asset(w.images.hero.small)} 768w, ${asset(w.images.hero.src)} 1440w`} sizes="100vw" width={w.images.hero.width} height={w.images.hero.height} alt={w.images.hero.alt} fetchpriority="high" />
           <span class="hero-image-label">{w.demo ? 'ДЕМОНСТРАЦИОННОЕ ИЗОБРАЖЕНИЕ' : w.name}</span>
         </div>
         <div class="hero-inner container">
@@ -58,7 +60,7 @@ const structuredData = {
       <section id="services" class="section container services-section">
         <div class="section-heading"><div><p class="eyebrow">УСЛУГИ</p><h2>Что можно сделать.</h2></div><p class="section-aside">Сначала осмотр и согласование.<br />Потом работа.</p></div>
         <div class="service-grid">{w.services.map((s, index) => <article class:list={["service-card", index === 0 ? "service-card-featured" : "service-card-compact"]}>
-          <div class="service-image-wrap"><img class="service-image" src={s.image.src} alt={s.image.alt} width={index === 0 ? "1200" : "800"} height={index === 0 ? "800" : "560"} loading="lazy" decoding="async" /><span class="service-kicker">{index === 0 ? "ОСНОВНАЯ УСЛУГА · ДЕМО" : `РАБОТА ${s.number} · ДЕМО`}</span></div>
+          <div class="service-image-wrap"><img class="service-image" src={asset(s.image.src)} alt={s.image.alt} width={index === 0 ? "1200" : "800"} height={index === 0 ? "800" : "560"} loading="lazy" decoding="async" /><span class="service-kicker">{index === 0 ? "ОСНОВНАЯ УСЛУГА · ДЕМО" : `РАБОТА ${s.number} · ДЕМО`}</span></div>
           <div class="service-body"><h3>{s.title}</h3><p>{s.text}</p><div class="service-price"><strong>от {money(s.price)}</strong><span>{s.unit} · пример тарифа</span></div></div>
         </article>)}</div>
       </section>
@@ -74,19 +76,19 @@ const structuredData = {
       <section class="section container workshop-section" aria-labelledby="approach-title">
         <div class="section-heading"><div><p class="eyebrow">В МАСТЕРСКОЙ</p><h2 id="approach-title">Небольшая мастерская.<br />Всё по делу.</h2></div><p class="section-aside">Показываем пример оснащения<br />и условий одного бокса.</p></div>
         <div class="workshop-feature">
-          <figure class="workshop-photo"><img src={w.benefits[0].image.src} alt={w.benefits[0].image.alt} width="1200" height="820" loading="lazy" decoding="async" /><figcaption>ДЕМОНСТРАЦИОННОЕ ФОТО · ЗАМЕНИТЬ НА СНИМОК БОКСА</figcaption></figure>
+          <figure class="workshop-photo"><img src={asset(w.benefits[0].image.src)} alt={w.benefits[0].image.alt} width="1200" height="820" loading="lazy" decoding="async" /><figcaption>ДЕМОНСТРАЦИОННОЕ ФОТО · ЗАМЕНИТЬ НА СНИМОК БОКСА</figcaption></figure>
           <div class="workshop-details"><p class="workshop-intro">{w.customerGuide.workTitle}<span class="guide-demo">· пример процесса, подтвердите перед запуском</span></p><ol class="work-steps">{w.customerGuide.workSteps.map(step => <li>{step}</li>)}</ol><div class="workshop-points">{w.benefits.slice(0, 4).map((b, index) => <article class="workshop-point"><span class="workshop-point-number">0{index + 1}</span><div><h3>{b.title}</h3><p>{b.text}</p></div><span class="demo-mark">ДЕМО</span></article>)}</div></div>
         </div>
       </section>
       <section id="master" class="container master-section">
-        <div class="master-photo">{w.images.master ? <img src={w.images.master} alt={w.demo ? w.images.masterAlt : `${w.master.name}, ${w.master.role}`} width="760" height="950" loading="lazy" decoding="async" /> : <div class="photo-placeholder"><span class="portrait-initials">{w.master.initials}</span><span><Icon name="image" size={20} />Здесь будет фото мастера</span></div>}<span class="photo-tag">{w.demo ? 'ДЕМОНСТРАЦИОННОЕ ФОТО' : w.master.role}</span></div>
+        <div class="master-photo">{w.images.master ? <img src={asset(w.images.master)} alt={w.demo ? w.images.masterAlt : `${w.master.name}, ${w.master.role}`} width="760" height="950" loading="lazy" decoding="async" /> : <div class="photo-placeholder"><span class="portrait-initials">{w.master.initials}</span><span><Icon name="image" size={20} />Здесь будет фото мастера</span></div>}<span class="photo-tag">{w.demo ? 'ДЕМОНСТРАЦИОННОЕ ФОТО' : w.master.role}</span></div>
         <div class="master-copy"><p class="eyebrow">МАСТЕР</p><h2>Работаю сам.<br />Отвечаю за результат.</h2><blockquote>«{w.master.quote}»</blockquote></div>
         <aside class="master-meta" aria-label="О мастере"><div><span class="master-meta-label">ИМЯ</span><strong>{w.master.name}</strong><span>{w.master.role}</span></div><div><span class="master-meta-label">ОПЫТ</span><strong>{w.master.experience}</strong><span>демонстрационный пример</span></div><p>{w.master.note}</p></aside>
       </section>
       <section id="callback" class="container callback-section"><div><p class="eyebrow">ПРОЩЕ ОБСУДИТЬ ПО ТЕЛЕФОНУ</p><h2>Колёса подождут.<br />Оставьте номер.</h2><p>Уточним размер, работы и стоимость.<br />Или позвоните сами: <a href={w.phone.href}>{w.phone.display}</a></p><aside class="call-guide"><div class="call-guide-heading"><h3>{w.customerGuide.phoneTitle}</h3><span>{w.customerGuide.phoneNote}</span></div><p>{w.customerGuide.phoneIntro}</p><ul>{w.customerGuide.phoneDetails.map(detail => <li>{detail}</li>)}</ul></aside></div><div><CallbackForm client:visible {...w.callback} demo={w.demo} /><noscript><p class="fineprint">Для формы нужен JavaScript. Контакты и телефон доступны без него.</p></noscript></div></section>
       <section id="contacts" class="section container">
         <div class="section-heading"><div><p class="eyebrow">АДРЕС И МАРШРУТ</p><h2>Как найти мастерскую.</h2></div><span class="outline-tag">ДЕМОАДРЕС</span></div>
-        <div class="contact-layout"><div class="contact-info"><address><div><Icon name="pin" /><p><strong>{w.address.street}</strong><span>{w.address.city} · {w.location}</span></p></div><div><Icon name="clock" /><p><strong>{w.hours.label}</strong><span>Пример часов работы</span></p></div><div><Icon name="phone" /><p><a href={w.phone.href}><strong>{w.phone.display}</strong></a><span>Демонстрационный номер</span></p></div></address><p class="directions">{w.directions}</p><div class="route-buttons">{w.routes.map(route => <a class="button button-outline" href={route.href} target="_blank" rel="noopener noreferrer" aria-label={`${route.name}: ${route.note}`}><Icon name="pin" size={17} />{route.name}</a>)}</div><p class="fineprint">Пример адреса и ориентиров. Ссылки открывают карты без точки мастерской; маршрут появится после замены данных.</p></div><div class="entrance-photo">{w.images.entrance ? <img src={w.images.entrance} alt={w.images.entranceAlt} width="900" height="600" loading="lazy" decoding="async" /> : <div class="photo-placeholder"><Icon name="image" size={42} /><strong>Здесь начинается<br />знакомство с боксом.</strong><span>Место для фотографии въезда</span></div>}<span class="photo-tag">{w.demo ? 'ДЕМО · ПРИМЕР ВЪЕЗДА' : w.name}</span></div></div>
+        <div class="contact-layout"><div class="contact-info"><address><div><Icon name="pin" /><p><strong>{w.address.street}</strong><span>{w.address.city} · {w.location}</span></p></div><div><Icon name="clock" /><p><strong>{w.hours.label}</strong><span>Пример часов работы</span></p></div><div><Icon name="phone" /><p><a href={w.phone.href}><strong>{w.phone.display}</strong></a><span>Демонстрационный номер</span></p></div></address><p class="directions">{w.directions}</p><div class="route-buttons">{w.routes.map(route => <a class="button button-outline" href={route.href} target="_blank" rel="noopener noreferrer" aria-label={`${route.name}: ${route.note}`}><Icon name="pin" size={17} />{route.name}</a>)}</div><p class="fineprint">Пример адреса и ориентиров. Ссылки открывают карты без точки мастерской; маршрут появится после замены данных.</p></div><div class="entrance-photo">{w.images.entrance ? <img src={asset(w.images.entrance)} alt={w.images.entranceAlt} width="900" height="600" loading="lazy" decoding="async" /> : <div class="photo-placeholder"><Icon name="image" size={42} /><strong>Здесь начинается<br />знакомство с боксом.</strong><span>Место для фотографии въезда</span></div>}<span class="photo-tag">{w.demo ? 'ДЕМО · ПРИМЕР ВЪЕЗДА' : w.name}</span></div></div>
       </section>
     </main>
     <footer class="site-footer"><div class="container"><div class="footer-top"><div><Brand name={w.name} /><p>{w.tagline}</p></div><address><a href={w.phone.href}>{w.phone.display}</a><span>{w.address.city}, {w.address.street}</span><span>{w.hours.label}</span></address></div><div id="demo-details" class="demo-details"><p>{w.demo ? 'Демонстрационный шаблон. Название, телефон, адрес, тарифы, часы, опыт, оборудование и условия — заменяемые примеры, а не сведения о действующей мастерской.' : w.legal.companyDetails}</p>{w.legal.privacyUrl ? <a href={w.legal.privacyUrl}>Политика обработки персональных данных</a> : <p>Владелец добавит настоящие реквизиты, политику обработки данных и условия согласия.</p>}</div><div class="footer-bottom"><span>© {new Date().getFullYear()} {w.name}{w.demo ? ' · Демо' : ''}</span><span>С заботой о каждом обороте.</span></div></div></footer>

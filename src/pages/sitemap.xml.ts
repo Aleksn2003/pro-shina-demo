@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { workshop } from "../config/workshop";
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
 const escapeXml = (s: string) =>
   s
     .replace(/&/g, "&amp;")
@@ -9,6 +10,6 @@ const escapeXml = (s: string) =>
     .replace(/'/g, "&apos;");
 export const GET: APIRoute = () =>
   new Response(
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${workshop.seo.indexable && !workshop.demo ? `<url><loc>${escapeXml(new URL("/", workshop.seo.siteUrl).href)}</loc></url>` : ""}</urlset>`,
+    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${workshop.seo.indexable && !workshop.demo ? `<url><loc>${escapeXml(new URL(baseUrl, workshop.seo.siteUrl).href)}</loc></url>` : ""}</urlset>`,
     { headers: { "Content-Type": "application/xml; charset=utf-8" } },
   );
