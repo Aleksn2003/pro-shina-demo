@@ -406,6 +406,9 @@ h1 {
   height: 21px;
   flex: 0 0 21px;
 }
+.hero-facts .fact-icon-tire {
+  object-fit: contain;
+}
 .hero-facts strong {
   font-size: 16px;
   font-weight: 600;
