@@ -2,11 +2,15 @@
 
 A single-page website template for an independent, one-bay tire service. The primary customer action is to call or join the live queue. Online booking is not included.
 
-## Авторство и использование
+## Authorship and Use (English) / Авторство и использование
 
 Автор шаблона: [Aleksn2003](https://github.com/Aleksn2003). Все права на созданные автором исходный код, структуру и дизайн шаблона сохранены за автором. Использование, копирование, изменение и распространение шаблона или его частей за пределами возможностей GitHub допускаются только с предварительного разрешения автора. Публичность репозитория позволяет просматривать и форкать его на GitHub в соответствии с [условиями GitHub](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service); это не является открытой лицензией на повторное использование шаблона.
 
 В репозитории нет открытой лицензии (`LICENSE`). Это уведомление фиксирует намерение автора, но не заменяет юридическую консультацию или отдельную лицензию.
+
+Template author: [Aleksn2003](https://github.com/Aleksn2003). All rights to the source code, structure, and design created by the author remain with the author. Use, copying, modification, or distribution of this template or any part of it outside GitHub's platform features requires the author's prior permission. Because the repository is public, users may view and fork it on GitHub under [GitHub's Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service); this does not grant an open license to reuse the template.
+
+This repository has no open-source license (`LICENSE`). This notice states the author's intent but does not replace legal advice or a separate license.
 
 ## Getting started
 
