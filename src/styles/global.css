@@ -1533,6 +1533,29 @@ legend {
   font-size: 11px;
   color: #c2cdd7;
 }
+.author-credit {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0 20px;
+  border-top: 1px solid var(--line);
+  color: #aebbc5;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.author-credit a {
+  color: #f2f4f5;
+  text-decoration: underline;
+  text-decoration-color: #71879a;
+  text-underline-offset: 3px;
+}
+.author-credit a:hover {
+  color: #d7e7f5;
+}
+.author-credit a:focus-visible {
+  outline: 2px solid #d7e7f5;
+  outline-offset: 3px;
+}
 .mobile-action-bar {
   display: none;
 }
@@ -2304,6 +2327,10 @@ legend {
     font-size: 10px;
     gap: 15px;
     line-height: 1.5;
+  }
+  .author-credit {
+    flex-direction: column;
+    gap: 5px;
   }
   .mobile-action-bar {
     display: grid;

@@ -176,6 +176,11 @@ export const workshop = {
     companyDetails: null as string | null,
     privacyUrl: null as string | null,
   },
+  attribution: {
+    author: "Aleksn2003",
+    url: "https://github.com/Aleksn2003",
+    notice: "Использование и копирование шаблона — только с разрешения автора.",
+  },
   seo: {
     siteUrl: "https://aleksn2003.github.io/pro-shina-demo/",
     // Keep false until business details, domain, consent and documents are verified.
