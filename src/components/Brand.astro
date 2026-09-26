@@ -1,0 +1,17 @@
+---
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = "" } = Astro.props;
+const separatorIndex = name.indexOf("_");
+const prefix = separatorIndex >= 0 ? name.slice(0, separatorIndex) : name;
+const suffix = separatorIndex >= 0 ? name.slice(separatorIndex + 1) : "";
+---
+
+<a href="/" class:list={["brand", className]} aria-label={`${name} — на главную`}>
+  <span class="brand-wordmark">
+    {suffix ? <><span class="brand-pro">{prefix}</span><span class="brand-separator">_</span><span class="brand-suffix">{suffix}</span></> : <span class="brand-suffix">{prefix}</span>}
+  </span>
+</a>
