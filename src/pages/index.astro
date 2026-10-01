@@ -104,7 +104,24 @@ const structuredData = {
         const backToTop = document.querySelector('.back-to-top');
         const prompt = document.querySelector('#scroll-call-prompt');
         const hero = document.querySelector('.hero');
+        const navItems = Array.from(document.querySelectorAll('.site-header nav a[href^="#"]'))
+          .map(link => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+          .filter(item => item.section);
         let dismissed = false;
+        const updateActiveNav = () => {
+          const marker = Math.min(220, window.innerHeight * 0.34);
+          let activeItem = null;
+          for (const item of navItems) {
+            if (item.section.getBoundingClientRect().top <= marker) activeItem = item;
+          }
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) {
+            activeItem = navItems.at(-1) || activeItem;
+          }
+          for (const item of navItems) {
+            if (item === activeItem) item.link.setAttribute('aria-current', 'location');
+            else item.link.removeAttribute('aria-current');
+          }
+        };
         const updateVisibility = () => {
           if (backToTop) backToTop.classList.toggle('is-visible', window.scrollY > 600);
           if (prompt && hero && !dismissed) {
@@ -112,6 +129,7 @@ const structuredData = {
             prompt.classList.toggle('is-visible', visible);
             prompt.setAttribute('aria-hidden', String(!visible));
           }
+          updateActiveNav();
         };
         prompt?.querySelector('.scroll-call-close')?.addEventListener('click', () => {
           dismissed = true;

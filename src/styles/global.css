@@ -2896,7 +2896,7 @@ legend {
     height: 2px;
     content: "";
     background: #d18a4d;
-    transform: scaleX(.45);
+    transform: scaleX(0);
     transform-origin: center;
     transition: transform .18s ease;
   }
@@ -2905,7 +2905,8 @@ legend {
     color: #fff;
   }
   .site-header nav a:hover::after,
-  .site-header nav a:focus-visible::after { transform: scaleX(1); }
+  .site-header nav a:focus-visible::after,
+  .site-header nav a[aria-current="location"]::after { transform: scaleX(1); }
   .hero-inner,
   .hero-content,
   .hero-facts { min-width: 0; max-width: 100%; }
@@ -2991,6 +2992,7 @@ legend {
   .workshop-points {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 20px;
+    border-top: 1px solid var(--line);
   }
   .workshop-point {
     grid-template-columns: 23px minmax(0, 1fr);
@@ -3008,10 +3010,12 @@ legend {
     justify-self: start;
     margin-top: 6px;
   }
+  .workshop-point:nth-child(-n + 2) { border-top: 0; }
   .work-steps {
     gap: 7px;
     margin-top: 12px;
-    padding-bottom: 14px;
+    padding-bottom: 0;
+    border-bottom: 0;
   }
   .work-steps li::before { width: 23px; height: 23px; }
 }
