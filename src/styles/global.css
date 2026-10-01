@@ -2246,7 +2246,7 @@ legend {
   .master-copy blockquote {
     font-size: 15px;
     margin-block: 20px;
-    padding-left: 16px;
+    padding-left: 0;
   }
   .master-copy > .fineprint {
     font-size: 11px;
@@ -2259,6 +2259,10 @@ legend {
   }
   .call-guide {
     padding: 14px;
+  }
+  .call-guide ul {
+    list-style: none;
+    padding-left: 0;
   }
   .call-guide-heading {
     align-items: flex-start;
@@ -2888,8 +2892,10 @@ legend {
   .hero-facts > div:last-child { grid-column: 1 / -1; }
   .hero-facts p { min-width: 0; flex: 1; }
   .services-section .service-price span { white-space: normal; overflow-wrap: anywhere; }
-  .services-section::before,
-  .prices-section::before,
+  .work-steps li {
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 8px;
+  }
   .master-section::before {
     left: 0;
     width: 100%;
