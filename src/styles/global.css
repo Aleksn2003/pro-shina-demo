@@ -2810,13 +2810,29 @@ legend {
 
 @media (max-width: 700px) {
   .scroll-call-prompt {
-    right: 12px;
+    left: 10px;
+    right: 10px;
     bottom: calc(78px + env(safe-area-inset-bottom, 0px));
-    width: min(360px, calc(100vw - 24px));
-    max-height: 38vh;
-    padding: 17px 18px 18px;
+    width: auto;
+    max-height: min(30vh, 175px);
+    padding: 11px 13px 12px;
   }
-  .scroll-call-prompt h2 { font-size: 17px; }
+  .scroll-call-prompt .hero-guide-label {
+    font-size: 9px;
+  }
+  .scroll-call-prompt h2 {
+    margin-top: 5px;
+    font-size: 15px;
+  }
+  .scroll-call-prompt p {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .scroll-call-close {
+    top: 7px;
+    right: 8px;
+  }
   .services-section {
     margin-top: 17px;
     padding-block: 43px 38px;
